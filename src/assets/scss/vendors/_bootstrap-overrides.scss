@@ -1,0 +1,30 @@
+// src/assets/styles/vendors/_bootstrap-overrides.scss
+
+// Importamos solo lo que necesitamos (opcional, pero recomendado para reducir tamaño)
+// Pero para simplicidad, usaremos el enfoque de override
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+
+// Aquí reemplazamos las variables de Bootstrap con las nuestras
+$primary: $brand-primary;
+$secondary: $secondary;
+$success: $success;
+$info: $info;
+$warning: $brand-accent; // ¡Usamos nuestro acento rosa!
+$danger: $danger;
+
+$body-bg: $body-bg;
+$body-color: $text-color;
+
+$font-family-sans-serif: $font-family-sans-serif;
+$font-size-base: $font-size-base;
+$line-height-base: $line-height-base;
+
+$border-radius: $border-radius;
+$border-radius-sm: $border-radius-sm;
+$border-radius-lg: $border-radius-lg;
+
+// Reimportamos los componentes de Bootstrap
+@import "bootstrap/scss/bootstrap";

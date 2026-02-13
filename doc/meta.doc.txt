@@ -1,0 +1,39 @@
+Cambiar el título de la página (<title>)
+
+ejm: meta: {
+  title: 'Contact - Mi Portafolio',
+  description: 'Contact me',
+}
+
+
+uso: 
+if (to.meta.title) {
+	document.title = to.meta.title;
+}
+
+meta: {
+  title: 'Contact',
+  description: 'Get in touch with me',
+  
+  // ⭐ Autenticación
+  requiresAuth: true,     // Requiere login
+  guest: true,            // Solo para no logueados
+  
+  // ⭐ Permisos
+  roles: ['admin'],       // Solo admin
+  permissions: ['edit'],  // Permisos específicos
+  
+  // ⭐ Layout
+  layout: 'admin',        // Cambiar layout
+  
+  // ⭐ SEO
+  keywords: ['contact', 'portfolio'],
+  ogImage: '/img/contact.jpg',
+  
+  // ⭐ Breadcrumbs
+  breadcrumb: 'Contact',
+  
+  // ⭐ Custom
+  hideNavbar: true,       // Ocultar navbar
+  theme: 'dark',          // Tema oscuro
+}

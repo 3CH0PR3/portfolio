@@ -1,0 +1,27 @@
+// 1. Importa Bootstrap primero
+@import "bootstrap/scss/bootstrap";
+
+// 2. Bootstrap Icons
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+// 3. Abstracts (variables primero!)
+// @import "abstracts/variables";
+// @import "abstracts/mixins";
+// @import "abstracts/functions";
+
+// 4. Base
+// @import "base/reset";
+@import "base/base";
+// @import "base/typography";
+
+// 5. Vendors (Bootstrap con overrides - AHORA DESPUÉS de bootstrap)
+// @import "vendors/bootstrap-overrides";
+
+// 6. Componentes personalizados
+// @import "components/buttons";
+
+// 7. Layouts
+// @import "layout/landing";
+
+// 8. Themes (opcional)
+// @import "themes/light";
