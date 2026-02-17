@@ -1,277 +1,159 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import profileImg from "@/assets/images/me.png";
 import cv from "@/assets/pdf/CV-Andres-Hernandez.pdf";
+import { ref, computed } from "vue";
 
-const isVisible = ref(false);
 const downloading = ref(false);
 
-onMounted(() => {
-	setTimeout(() => {
-		isVisible.value = true
-	}, 100)
-});
+const techs = [
+  "Laravel",
+  "Vue.js",
+  "Inertia.js",
+  "MySQL",
+  "Tailwind CSS",
+];
+
+const marqueeItems = computed(() => [...techs, ...techs]);
 
 const cvDownload = () => {
-	downloading.value = true;
+  downloading.value = true;
 
-	const link = document.createElement('a');
-	link.href = cv;
-	link.download = 'CV-Andres-Hernandez.pdf';
-	link.click();
+  const link = document.createElement("a");
+  link.href = cv;
+  link.download = "CV-Andres-Hernandez.pdf";
+  link.click();
 
-	setTimeout(() => {
-		downloading.value = false;
-	}, 1000);
-}
+  setTimeout(() => {
+    downloading.value = false;
+  }, 1000);
+};
 
-const scrollToSection = (id) => {
-	const element = document.getElementById(id)
-	element?.scrollIntoView({ behavior: 'smooth' })
-}
+const goToProyects = () => {
+  document
+    .getElementById("proyectos")
+    ?.scrollIntoView({ behavior: "smooth" });
+};
 </script>
 
 <template>
-	<section id="hero" class="hero">
-		<!-- Background Glows -->
-		<div class="glow glow-1"></div>
-		<div class="glow glow-2"></div>
-
-		<div class="hero-content" :class="{ 'is-visible': isVisible }">
-			<div class="profile-container">
-				<!-- Placeholder for profile picture -->
-				<div class="profile-frame">
-					<img :src="profileImg" alt="Omar Dávila" class="profile-img" />
-				</div>
-				<div class="status-badge">
-					<span class="status-dot"></span>
-					<span>Disponible para trabajar</span>
+	<section class="py-20 md:py32 relative min-h-[90vh] flex items-center justify-center" id="inicio">
+		<div class="absolute inset-0 opacity-20 pointer-events-none">
+			<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px]"></div>
+			<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 blur-[120px]"></div>
+		</div>
+		<div class="max-w-5xl mx-auto p-6 text-center relative z-10 overflow-hidden">
+			
+			<div class="mb-12 flex justify-center">
+				<div class="relative p-1 bg-white/10 dark:bg-white/10 bg-slate-200/50 border border-slate-300 dark:border-white/20 rounded-sm">
+					<img
+						:src="profileImg"
+						alt="Andres Hernandez" 
+						class="w-[15rem] h-[14rem] object-cover object-[center_20%]"
+					/>
+					<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white dark:border-slate-800 rounded-full"></div>
 				</div>
 			</div>
-
-			<h1 class="hero-title">
-				Hola, soy <span class="gradient-text">Andres Hernandez</span>
+			
+			<h1 class="text-1xl md:text-4xl text-start font-display mb-6 tracking-tight text-primary leading-none">HOLA, SOY</h1>
+			<h1 class="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight text-slate-900 dark:text-white leading-none">
+				ANDRES HERNANDEZ
 			</h1>
 
-			<h2 class="hero-role">Programador de Sistemas</h2>
-
-			<p class="hero-subtitle">
-				Desarrollador <strong>Fullstack</strong> con <strong>+3 años de experiencia</strong> transformando ideas en
-				experiencias digitales excepcionales. Experto en
-				<span>Laravel</span>, <span>Vue</span> y <span>Arquitectura Cloud</span>.
+			<p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-12 font-light tracking-wide">
+				Fullstack Developer especializado en la creación de <span class="text-primary font-medium"> arquitecturas escalables</span>
+				y soluciones digitales de alto rendimiento.
 			</p>
-
-			<div class="hero-actions">
+			
+			<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
 				<button 
-					class="btn btn-primary" 
+					@click="goToProyects"
 					:disabled="downloading"
-					@click="scrollToSection('projects')"
-				>
-					Ver Proyectos
-				</button>
-				<button 
-					class="btn btn-outline"
-					:disabled="downloading"
+					class="btn-premium w-full md:w-auto cursor-pointer btn-primary min-w-[180px]"
+				>Ver Proyectos</button>
+				<button
 					@click="cvDownload"
+					:disabled="downloading"
+					class="btn-premium btn-outline w-full md:w-auto min-w-[180px] flex items-center justify-center gap-2 cursor-pointer"
 				>
-					<span v-if="!downloading">Descargar CV</span>
-					<span v-else>
-						<i class="spinner-border spinner-border-sm"></i>
-						Descargando ...
-					</span>
-				</button>
-			</div>
+					<template v-if="downloading">
+						<svg
+							class="size-4 animate-spin"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+						>
+							<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+							<path
+								class="opacity-75"
+								fill="currentColor"
+								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+							/>
+						</svg>
 
-			<div class="tech-stack-preview">
-				<span class="tech-icon">Laravel</span>
-				<span class="separator">•</span>
-				<span class="tech-icon">Vue.js</span>
-				<span class="separator">•</span>
-				<span class="tech-icon">Inertia.js</span>
-				<span class="separator">•</span>
-				<span class="tech-icon">Mysql</span>
+						<span>Procesando…</span>
+					</template>
+
+					<span v-else>Descargar CV</span>
+				</button>
+
+			</div>
+			<div class="mt-24 max-w-3xl mx-auto overflow-hidden">
+				<div class="marquee">
+					<div class="marquee-track">
+						<span v-for="(tech, i) in marqueeItems" :key="i" class="marquee-item">
+							{{ tech }}
+							<span class="separator">|</span>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 </template>
 
 <style lang="scss" scoped>
-.hero {
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	overflow: hidden;
-	padding: 0 2rem 2rem;
-	text-align: center;
+.marquee {
+  overflow: hidden;
+  width: 100%;
 
-	@media (max-width: 576px) {
-		height: 100%;
-		padding-top: 5rem;
-		padding-bottom: 3rem;
+	.marquee-track {
+		display: flex;
+		width: max-content;
+		animation: marquee 30s linear infinite;
 	}
 }
 
-/* Ambient Glows */
-.glow {
-	position: absolute;
-	width: 600px;
-	height: 600px;
-	border-radius: 50%;
-	filter: blur(120px);
-	opacity: 0.1;
-	z-index: 0;
-	pointer-events: none;
 
-	@media (max-width: 576px) {
-		display: none;
-	}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }
 
-.glow-1 {
-	background: var(--primary);
-	top: -200px;
-	left: -200px;
+.marquee-item {
+  margin-right: 2rem;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgb(148 163 184);
 }
 
-.glow-2 {
-	background: var(--secondary);
-	bottom: -200px;
-	right: -200px;
-}
-
-.hero-content {
-	position: relative;
-	z-index: 10;
-	max-width: 992px;
-	opacity: 0;
-	transform: translateY(20px);
-	transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.hero-content.is-visible {
-	opacity: 1;
-	transform: translateY(0);
-}
-
-.profile-container {
-	position: relative;
-	display: inline-block;
-	margin-bottom: 2rem;
-}
-
-.profile-frame {
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-	padding: 4px;
-	background: var(--gradient-primary);
-	margin: 0 auto 1.5rem;
-	position: relative;
-}
-
-.profile-img {
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	object-fit: cover;
-	object-position: center 20%;
-	/* Adjusted to show face better */
-	border: 4px solid var(--bg-primary);
-}
-
-.status-badge {
-	position: absolute;
-	bottom: 0;
-	right: -20px;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	background: rgba(20, 184, 166, 0.1);
-	border: 1px solid rgba(20, 184, 166, 0.2);
-	padding: 0.5rem 1rem;
-	border-radius: 100px;
-	font-size: 0.75rem;
-	color: var(--primary);
-	backdrop-filter: blur(10px);
-	white-space: nowrap;
-}
-
-.status-dot {
-	width: 6px;
-	height: 6px;
-	background-color: var(--primary);
-	border-radius: 50%;
-	box-shadow: 0 0 10px rgba(20, 184, 166, 0.5);
-	animation: pulse 2s infinite;
-}
-
-.hero-title {
-	margin-bottom: 0.5rem;
-}
-
-.hero-role {
-	font-size: 1.5rem;
-	color: var(--text-secondary);
-	font-weight: 500;
-	margin-bottom: 1.5rem;
-	font-family: var(--font-sans);
-}
-
-.hero-subtitle {
-	font-size: 1.25rem;
-	line-height: 1.3;
-	margin-bottom: 3rem;
-	color: var(--text-secondary);
-}
-
-.hero-subtitle strong,
-.hero-subtitle span {
-	color: var(--text-primary);
-	font-weight: 600;
-}
-
-.hero-actions {
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
-	margin-bottom: 4rem;
-}
-
-.tech-stack-preview {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1rem;
-	color: var(--text-muted);
-	font-size: 0.875rem;
-	font-weight: 500;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
+.dark .marquee-item {
+  color: rgb(71 85 105);
 }
 
 .separator {
-	opacity: 0.3;
+  margin-left: 2rem;
+  opacity: 0.4;
 }
 
-@media (max-width: 640px) {
-	.hero-actions {
-		flex-direction: column;
-	}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-@keyframes pulse {
-	0% {
-		box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
-	}
-
-	70% {
-		box-shadow: 0 0 0 10px rgba(20, 184, 166, 0);
-	}
-
-	100% {
-		box-shadow: 0 0 0 0 rgba(20, 184, 166, 0);
-	}
-}
 </style>

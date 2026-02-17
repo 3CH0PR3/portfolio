@@ -1,0 +1,5 @@
+@layer utilities {
+  .object-center-20 {
+    object-position: center 20%;
+  }
+}

@@ -37,3 +37,6 @@ meta: {
   hideNavbar: true,       // Ocultar navbar
   theme: 'dark',          // Tema oscuro
 }
+
+pagina api contact 
+https://app.web3forms.com/forms/b1e783bc-51c3-4f7e-b93d-846b393ea8d3/submissions

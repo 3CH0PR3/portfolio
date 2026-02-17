@@ -1,7 +1,8 @@
 <script setup>
 import HeroSection from '../components/HeroSection.vue'
 import AboutSection from '../components/AboutSection.vue'
-import SkillsSection from '../components/SkillsSection.vue'
+import ServicesSection from '../components/ServicesSection.vue'
+import StackSection from '../components/StackSection.vue'
 import ProjectsSection from '../components/ProjectsSection.vue'
 import ContactSection from '../components/ContactSection.vue'
 </script>
@@ -10,8 +11,9 @@ import ContactSection from '../components/ContactSection.vue'
   <div>
     <HeroSection />
     <AboutSection />
-    <SkillsSection />
+		<ServicesSection />
+		<StackSection />
     <ProjectsSection />
-    <ContactSection />
+		<ContactSection />
   </div>
 </template>

@@ -1,92 +1,99 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useDarkMode } from '@/composables/useDarkMode';
+import { useScrollDetect } from '@/composables/useScrollDetect';
+import router from '@/router';
+
+const { isDark, toggleDark } = useDarkMode();
+const { isScrolling } = useScrollDetect();
+
+const activeSection = ref('inicio');
+
+const navItems = [
+	{ id: 'inicio', label: 'Inicio' },
+	{ id: 'sobre-mi', label: 'Sobre Mí' },
+	{ id: 'servicios', label: 'Servicios' },
+	{ id: 'habilidades', label: 'Stack' },
+	{ id: 'proyectos', label: 'Proyectos' },
+	{ id: 'contacto', label: 'Contacto' }
+];
+
+const goSection = (section) => {
+	activeSection.value = section;
+	const element = document.getElementById(section);
+	if (!element) return;
+	
+	const navHeight = 80;
+	const elementPosition = element.getBoundingClientRect().top;
+	const offsetPosition = elementPosition + window.pageYOffset - navHeight - 20; // 20px extra de padding
+	
+	window.scrollTo({
+		top: offsetPosition,
+		behavior: 'smooth'
+	});
+}
+
+const redirect = () => {
+	router.push({
+		name: 'home',
+	})
+}
+
+onMounted(() => {
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) activeSection.value = entry.target.id;
+			});
+		},
+		{ 
+			threshold: 0.5,
+			rootMargin: '-100px 0px 0px 0px'
+		}
+	);
+
+	navItems.forEach(({ id }) => {
+		const el = document.getElementById(id);
+		if (el) observer.observe(el);
+	});
+
+	onUnmounted(() => observer.disconnect());
+});
+</script>
 
 <template>
-  <header class="sticky-top">
-		<nav class="navbar navbar-expand-lg navbar-dark">
-			<div class="container">
-				<router-link to="/" class="navbar-brand">
-					<span class="brand-name">Portafolio</span>
-				</router-link>
-
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarNav"
-				>
-					<span class="navbar-toggler-icon"></span>
+	<nav class="nav-glass" :class="{ 'scrolled': isScrolling }">
+		<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+			<button @click="redirect" class="text-xl font-display font-black tracking-tighter flex items-center gap-2">
+				<span class="text-primary">ANDRES</span>
+				<span class="text-slate-400 dark:text-slate-600">/</span>
+				<span class="dark:text-white">HERNANDEZ</span>
+			</button>
+			
+			<div class="hidden md:flex items-center gap-8 text-[12px] font-bold tracking-[0.2em] uppercase">
+				<button 
+					v-for="item in navItems" 
+					:key="item.id"
+					@click="goSection(item.id)"
+					:class="[
+						'nav-links transition-all duration-50',
+						!item.isButton && 'border-b-2',
+						!item.isButton && (activeSection === item.id ? 'border-primary' : 'border-transparent'),
+						item.isButton && 'btn-premium btn-primary px-5 py-2',
+						activeSection === item.id 
+							? 'text-primary' 
+							: 'hover:text-primary'
+					]">
+					{{ item.label }}
 				</button>
-
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item">
-							<router-link to="/" :class="['nav-link']" exact-active-class="active">Home</router-link>
-						</li>
-						<li class="nav-item">
-							<router-link to="/about" class="nav-link">Sobre Mí</router-link>
-						</li>
-						<li class="nav-item">
-							<router-link to="/posts" class="nav-link">Posts</router-link>
-						</li>
-						<li class="nav-item">
-							<router-link to="/contact" class="nav-link">Contacto</router-link>
-						</li>
-					</ul>
-				</div>
 			</div>
-  	</nav>
-	</header>
+
+			<button 
+				@click="toggleDark"
+				class="text-slate-600 dark:text-slate-400 hover:text-primary transition-all duration-50"
+				:class="{ 'rotate-180': isDark }">
+				<span class="material-symbols-outlined text-[20px]">brightness_6</span>
+			</button>
+		</div>
+	</nav>
 </template>
-
-<style lang="scss" scoped>
-.navbar {
-  background: rgba(17, 24, 39, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.brand-name {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.nav-link {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.95rem;
-  font-weight: 400;
-  padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
-
-  &:hover,
-  &.active {
-    color: #fff;
-  }
-
-  &.active {
-    position: relative;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 1rem;
-      right: 1rem;
-      height: 2px;
-      background: #fff;
-    }
-  }
-}
-
-@media (max-width: 991px) {
-  .navbar-nav {
-    padding: 1rem 0;
-  }
-
-  .nav-link.active::after {
-    display: none;
-  }
-}
-</style>

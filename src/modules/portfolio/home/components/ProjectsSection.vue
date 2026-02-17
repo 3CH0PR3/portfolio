@@ -1,168 +1,105 @@
 <script setup>
+import router from '@/router';
+
 const projects = [
-  {
-    title: 'SaaS multi-tenant',
-    description: 'Sistema SaaS profesional para gestión de clientes, ventas y seguimiento comercial con dashboard analítico.',
-    url: 'https://gea-wrc.com',
-    technologies: ['Laravel', 'vue.js', 'Mysql', 'Api Rest', 'Inertia', 'Tailwindcss', 'Vite', 'Pinia']
-  },
-  {
-    title: 'SoftERP',
-    description: 'Sistema ERP completo para gestión empresarial, inventarios, facturación y recursos humanos.',
-    url: 'https://softerp.itsolutionsengly.com/no-auth/sign-in',
-    technologies: ['Laravel', 'Angular', 'API REST', 'PostgreSQL']
-  },
-  {
-    title: 'Telmo API',
-    description: 'Backend API robusto para integración de servicios, autenticación y gestión de datos en tiempo real.',
-    url: 'https://api.telmo.ar/login',
-    technologies: ['Laravel', 'API REST', 'JWT', 'Redis']
-  },
-  {
-    title: 'SysEdu',
-    description: 'Plataforma educativa para gestión de instituciones, estudiantes, docentes y evaluaciones.',
-    url: 'https://sysedu.cremapr88venezuela.com/school/login',
-    technologies: ['Laravel', 'Filament', 'MySQL']
-  },
-  {
-    title: 'SysAdmin',
-    description: 'Panel de administración central para gestión multi-tenant y configuración del sistema.',
-    url: 'https://sysadmin.cremapr88venezuela.com/admin/login',
-    technologies: ['Laravel', 'Filament', 'Livewire', 'MySQL']
-  }
+	{
+		slug: 'multi-tenant',
+		title: 'SaaS multi-tenant',
+		icon: 'fas fa-cloud',
+		description: 'Sistema SaaS profesional para gestión de recusos aprobechables como ecas, macro rutas, aps, etc',
+		url: 'https://gea-wrc.com',
+		technologies: ['Laravel', 'vue.js', 'Mysql', 'Api Rest', 'Inertia', 'Tailwindcss', 'Vite', 'Pinia']
+	},
+	{
+		slug: 'softerp',
+		title: 'SoftERP',
+		icon: 'fas fa-briefcase',
+		description: 'Sistema ERP completo para gestión empresarial, inventarios, facturación y recursos humanos.',
+		url: 'https://softerp.itsolutionsengly.com/no-auth/sign-in',
+		technologies: ['Laravel', 'Blade', 'API REST', 'Mysql', 'Livewire', 'Vite']
+	},
+	{
+		slug: 'telmo-api',
+		title: 'Telmo API',
+		icon: 'fas fa-server',
+		description: 'Backend API robusto para integración de servicios, autenticación y gestión de datos en tiempo real.',
+		url: 'https://api.telmo.ar/login',
+		technologies: ['Laravel', 'Blade', 'API REST', 'JWT', 'Redis', 'Livewire']
+	},
+	{
+		slug: 'sysedu',
+		title: 'SysEdu',
+		icon: '',
+		description: 'Plataforma educativa para gestión de instituciones, estudiantes, docentes y evaluaciones.',
+		url: 'https://sysedu.cremapr88venezuela.com/school/login',
+		technologies: ['Laravel', 'Filament', 'MySQL']
+	},
+	{
+		slug: 'sysadmin',
+		title: 'SysAdmin',
+		icon: '',
+		description: 'Panel de administración central para gestión multi-tenant y configuración del sistema.',
+		url: 'https://sysadmin.cremapr88venezuela.com/admin/login',
+		technologies: ['Laravel', 'Filament', 'Livewire', 'MySQL']
+	}
 ]
+
+const getProjectUrl = (project) => {
+  router.push({ 
+    name: 'project',
+    params: { slug: project.slug }
+  })
+}
+
 </script>
 
 <template>
-  <section id="projects" class="section projects">
-    <div class="section-title">
-      <span>Portafolio</span>
-      <h2>Proyectos <span class="gradient-text">Destacados</span></h2>
-    </div>
-    
-    <div class="projects-grid">
-      <a 
-        v-for="(project, index) in projects" 
-        :key="project.title"
-        :href="project.url"
-        target="_blank"
-        rel="noopener"
-        class="project-card glass-card"
-        :style="{ animationDelay: `${index * 0.1}s` }"
-      >
-        <div class="project-header">
-          <div class="project-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </div>
-          <div class="project-link-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-          </div>
-        </div>
-        
-        <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-description">{{ project.description }}</p>
-        
-        <div class="project-technologies">
-          <span 
-            v-for="tech in project.technologies" 
-            :key="tech"
-            class="tech-tag"
-          >
-            {{ tech }}
-          </span>
-        </div>
-      </a>
-    </div>
-  </section>
+	<section class="py-20 md:py32 dark:bg-white/[0.02]" id="proyectos">
+		<div class="max-w-7xl mx-auto p-8">
+			<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+				<div class="max-w-2xl">
+					<span class="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">Portfolio</span>
+					<h2 class="text-4xl font-display font-bold dark:text-white">Proyectos Destacados</h2>
+				</div>
+			</div>
+			<div class="grid md:grid-cols-3 gap-6">
+				<div v-for="project in projects.slice(0, 3)" :key="project.slug" class="double-border">
+					<div class="group rounded-2xl overflow-hidden transition-all duration-50 bg-white border border-slate-300 shadow-sm dark:bg-white/0 dark:border-white/10 dark:shadow-none dark:hover:border-white/20">
+						<div class="aspect-video bg-slate-200 dark:bg-white/5 flex items-center justify-center border-b border-slate-200 dark:border-white/5 overflow-hidden">
+							<span 
+								v-if="project.icon" 
+								:class="[
+									'font-bold text-6xl transition-transform duration-50 ease-out group-hover:scale-110',
+									project.icon
+								]"
+							></span>
+						</div>
+						<div class="p-8">
+							<h3 class="text-lg font-bold mb-3 dark:text-white">{{ project.title }}</h3>
+							<p class="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">{{ project.description }}</p>
+							<div class="flex flex-wrap gap-2 mb-8">
+								<span
+									v-for="(technology, index) in project.technologies"
+									:key="technology + index"
+									class="flex items-center gap-3"
+								>
+									<span class="text-[9px] font-bold text-primary tracking-widest uppercase">
+										{{ technology }}
+									</span>
+
+									<span
+										v-if="index < project.technologies.length - 1"
+										class="text-[9px] font-bold text-slate-500 tracking-widest uppercase"
+									>/</span>
+								</span>
+							</div>
+							<button @click="getProjectUrl(project)" class="text-[10px] font-black uppercase text-primary flex items-center gap-1 hover:gap-2 transition-all">
+								Ver Detalles <i class="fa-solid fa-arrow-up-right-from-square"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </template>
-
-<style scoped>
-.projects {
-  background: var(--color-bg-secondary);
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2.5rem; /* Increased gap for better spacing */
-}
-
-.project-card {
-  display: flex;
-  flex-direction: column;
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.project-card:hover .project-link-icon {
-  opacity: 1;
-  transform: translate(0, 0);
-}
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.project-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-md);
-  color: white;
-}
-
-.project-link-icon {
-  opacity: 0;
-  transform: translate(-5px, 5px);
-  transition: all var(--transition-base);
-  color: var(--color-text-muted);
-}
-
-.project-title {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--color-text-primary);
-}
-
-.project-description {
-  font-size: 0.95rem;
-  line-height: 1.3;
-  flex-grow: 1;
-  margin-bottom: 1.5rem;
-}
-
-.project-technologies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tech-tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--color-accent-1);
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-}
-
-@media (max-width: 500px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

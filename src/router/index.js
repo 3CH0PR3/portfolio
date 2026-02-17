@@ -53,6 +53,16 @@ const router = createRouter({
 	history: createWebHistory(),
 	linkActiveClass: 'active',
 	linkExactActiveClass: 'active',
+	
+	scrollBehavior(to, from, savedPosition) {
+
+		if (to.meta.preserveScroll) return false;
+		if (savedPosition) return savedPosition;
+
+		return { top: 0, behavior: 'smooth' };
+	},
+
+
 	routes: [
 		// Rutas del portafolio (público)
 		...guestRoutes,

@@ -1,14 +1,27 @@
 export default [
-  {
-    path: '/',
-    name: 'home',
-    meta: {
-      title: 'Portafolio',
-      description: 'Welcome to our site',
+	{
+		path: '/',
+		name: 'home',
+
+		meta: {
+			title: 'Mi Portafolio',
 			guest: true,
-			// permissions: ['edit_posts'],
 			breadcrumb: 'Home'
-    },
-    component: () => import('../views/HomePage.vue'),
-  },
+		},
+
+		component: () => import('../views/HomePage.vue'),
+	},
+
+	{
+		path: '/project/:slug',
+		name: 'project',
+
+		meta: {
+			title: 'Projects - Mi Portafolio',
+			guest: true,
+			breadcrumb: 'Project'
+		},
+
+		component: () => import('../views/projectView.vue'),
+	}
 ];
